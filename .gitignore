@@ -13,3 +13,4 @@ instance/
 Thumbs.db
 database/*.sql
 static/css/*.css
+
