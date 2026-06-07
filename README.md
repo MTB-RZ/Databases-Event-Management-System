@@ -1,6 +1,6 @@
 # Event Management System
 
-A full-stack Event Management System built with Flask, MySQL, Jinja2, Bootstrap 5, HTML, CSS, and JavaScript. The application connects to a local MySQL database named `event_management` and provides a clean web interface for managing students, venues, events, tickets, and payments.
+This is an Event Management System built with Flask, MySQL, Jinja2, Bootstrap 5, HTML, CSS, and JavaScript. The application connects to a local MySQL database named `event_management` and provides a web interface for managing students, venues, events, tickets, and payments.
 
 ## Features
 
@@ -49,11 +49,6 @@ Event_management_system/
 │   ├── events.html
 │   ├── tickets.html
 │   └── payments.html
-├── static/
-│   ├── css/
-│   │   └── style.css
-│   └── js/
-│       └── script.js
 ├── README.md
 └── .gitignore
 ```
@@ -97,19 +92,6 @@ event_management
 ```text
 backend/db.py
 ```
-
-6. Replace `YOUR_PASSWORD` with your MySQL root password:
-
-```python
-"password": os.getenv("DB_PASSWORD", "YOUR_PASSWORD"),
-```
-
-Example:
-
-```python
-"password": os.getenv("DB_PASSWORD", "12345"),
-```
-
 ## Running the Application
 
 From inside the `Event_management_system` folder, run:
@@ -124,29 +106,7 @@ Then open this address in your browser:
 http://127.0.0.1:5000
 ```
 
-## Recommended Demo Order
-
-1. Add venues first.
-2. Add students.
-3. Add events and select venues.
-4. Add tickets and select students/events.
-5. Add payments and select tickets.
-6. Show the dashboard count cards.
-7. Demonstrate edit and delete operations.
-
-## Screenshots
-
-Add screenshots of the following pages here after running the project:
-
-- Dashboard
-- Students page
-- Venues page
-- Events page
-- Tickets page
-- Payments page
-
 ## Notes
 
 - The application uses stored procedures for CRUD operations whenever possible.
 - List pages and dropdowns use SELECT queries because the provided stored procedures fetch individual records by ID.
-- If a delete fails, check whether related records exist. For example, a student with tickets cannot be deleted until related tickets are removed.
