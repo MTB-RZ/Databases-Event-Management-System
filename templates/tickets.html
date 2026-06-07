@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="section-kicker">Tickets</p>
+        <h1>Ticket Bookings</h1>
+    </div>
+</section>
+
+<div class="row g-4">
+    <div class="col-lg-4">
+        <section class="content-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="section-kicker">{{ "Edit" if ticket else "Add" }}</p>
+                    <h2>{{ "Update Quantity" if ticket else "Add Ticket" }}</h2>
+                </div>
+            </div>
+            <form method="post" action="{{ url_for('tickets.update_ticket', ticket_id=ticket.ticket_id) if ticket else url_for('tickets.add_ticket') }}" class="vstack gap-3">
+                {% if not ticket %}
+                    <div>
+                        <label class="form-label">Student</label>
+                        <select class="form-select" name="student_id" required>
+                            <option value="">Select student</option>
+                            {% for student in students %}
+                                <option value="{{ student.student_id }}">{{ student.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Event</label>
+                        <select class="form-select" name="event_id" required>
+                            <option value="">Select event</option>
+                            {% for event in events %}
+                                <option value="{{ event.event_id }}">{{ event.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                {% else %}
+                    <div class="readonly-box">
+                        <span>Ticket ID</span>
+                        <strong>{{ ticket.ticket_id }}</strong>
+                    </div>
+                {% endif %}
+                <div>
+                    <label class="form-label">Quantity</label>
+                    <input class="form-control" type="number" name="quantity" min="1" value="{{ ticket.quantity if ticket else '' }}" required>
+                </div>
+                {% if not ticket %}
+                    <div>
+                        <label class="form-label">Booking Date</label>
+                        <input class="form-control" type="date" name="booking_date" required>
+                    </div>
+                {% endif %}
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary" type="submit">{{ "Update" if ticket else "Add" }} Ticket</button>
+                    {% if ticket %}
+                        <a class="btn btn-outline-secondary" href="{{ url_for('tickets.list_tickets') }}">Cancel</a>
+                    {% endif %}
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <div class="col-lg-8">
+        <section class="content-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="section-kicker">List</p>
+                    <h2>All Tickets</h2>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped align-middle app-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Student Name</th>
+                            <th>Event Name</th>
+                            <th>Quantity</th>
+                            <th>Booking Date</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in tickets %}
+                            <tr>
+                                <td>{{ item.ticket_id }}</td>
+                                <td>{{ item.student_name }}</td>
+                                <td>{{ item.event_name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.booking_date }}</td>
+                                <td class="text-end">
+                                    <a class="btn btn-sm btn-outline-primary" href="{{ url_for('tickets.edit_ticket', ticket_id=item.ticket_id) }}">Edit</a>
+                                    <form class="d-inline delete-form" method="post" action="{{ url_for('tickets.delete_ticket', ticket_id=item.ticket_id) }}">
+                                        <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">No tickets found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

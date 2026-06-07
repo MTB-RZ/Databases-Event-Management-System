@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="section-kicker">Venues</p>
+        <h1>Venue Management</h1>
+    </div>
+</section>
+
+<div class="row g-4">
+    <div class="col-lg-4">
+        <section class="content-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="section-kicker">{{ "Edit" if venue else "Add" }}</p>
+                    <h2>{{ "Update Venue" if venue else "Add Venue" }}</h2>
+                </div>
+            </div>
+            <form method="post" action="{{ url_for('venues.update_venue', venue_id=venue.venue_id) if venue else url_for('venues.add_venue') }}" class="vstack gap-3">
+                <div>
+                    <label class="form-label">Venue Name</label>
+                    <input class="form-control" type="text" name="venue_name" value="{{ venue.venue_name if venue else '' }}" required>
+                </div>
+                <div>
+                    <label class="form-label">Location</label>
+                    <input class="form-control" type="text" name="location" value="{{ venue.location if venue else '' }}" required>
+                </div>
+                <div>
+                    <label class="form-label">Capacity</label>
+                    <input class="form-control" type="number" name="capacity" min="1" value="{{ venue.capacity if venue else '' }}" required>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary" type="submit">{{ "Update" if venue else "Add" }} Venue</button>
+                    {% if venue %}
+                        <a class="btn btn-outline-secondary" href="{{ url_for('venues.list_venues') }}">Cancel</a>
+                    {% endif %}
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <div class="col-lg-8">
+        <section class="content-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="section-kicker">List</p>
+                    <h2>All Venues</h2>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped align-middle app-table">
+                    <thead>
+                        <tr>
+                            <th>Venue ID</th>
+                            <th>Venue Name</th>
+                            <th>Location</th>
+                            <th>Capacity</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in venues %}
+                            <tr>
+                                <td>{{ item.venue_id }}</td>
+                                <td>{{ item.venue_name }}</td>
+                                <td>{{ item.location }}</td>
+                                <td>{{ item.capacity }}</td>
+                                <td class="text-end">
+                                    <a class="btn btn-sm btn-outline-primary" href="{{ url_for('venues.edit_venue', venue_id=item.venue_id) }}">Edit</a>
+                                    <form class="d-inline delete-form" method="post" action="{{ url_for('venues.delete_venue', venue_id=item.venue_id) }}">
+                                        <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">No venues found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

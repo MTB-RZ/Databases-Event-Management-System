@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero-panel mb-4">
+    <div>
+        <p class="section-kicker">Dashboard</p>
+        <h1>Manage university events from one place</h1>
+        <p class="hero-copy">Track students, venues, events, bookings, and payments with a clean database-connected interface.</p>
+    </div>
+    <div class="hero-badge">
+        <span>MySQL 8.0</span>
+        <strong>Flask App</strong>
+    </div>
+</section>
+
+<section class="row g-3 mb-4">
+    <div class="col-12 col-sm-6 col-xl">
+        <a class="stat-card stat-students" href="{{ url_for('students.list_students') }}">
+            <span>Total Students</span>
+            <strong>{{ counts.students }}</strong>
+        </a>
+    </div>
+    <div class="col-12 col-sm-6 col-xl">
+        <a class="stat-card stat-venues" href="{{ url_for('venues.list_venues') }}">
+            <span>Total Venues</span>
+            <strong>{{ counts.venues }}</strong>
+        </a>
+    </div>
+    <div class="col-12 col-sm-6 col-xl">
+        <a class="stat-card stat-events" href="{{ url_for('events.list_events') }}">
+            <span>Total Events</span>
+            <strong>{{ counts.events }}</strong>
+        </a>
+    </div>
+    <div class="col-12 col-sm-6 col-xl">
+        <a class="stat-card stat-tickets" href="{{ url_for('tickets.list_tickets') }}">
+            <span>Total Tickets</span>
+            <strong>{{ counts.tickets }}</strong>
+        </a>
+    </div>
+    <div class="col-12 col-sm-6 col-xl">
+        <a class="stat-card stat-payments" href="{{ url_for('payments.list_payments') }}">
+            <span>Total Payments</span>
+            <strong>{{ counts.payments }}</strong>
+        </a>
+    </div>
+</section>
+
+<section class="content-panel">
+    <div class="panel-heading">
+        <div>
+            <p class="section-kicker">Modules</p>
+            <h2>Quick Access</h2>
+        </div>
+    </div>
+    <div class="row g-3">
+        <div class="col-md-6 col-xl-4">
+            <a class="module-link" href="{{ url_for('students.list_students') }}">
+                <span>Students</span>
+                <small>Add, edit, delete, and search student records.</small>
+            </a>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <a class="module-link" href="{{ url_for('venues.list_venues') }}">
+                <span>Venues</span>
+                <small>Manage event locations and capacity details.</small>
+            </a>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <a class="module-link" href="{{ url_for('events.list_events') }}">
+                <span>Events</span>
+                <small>Create events and connect them with venues.</small>
+            </a>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <a class="module-link" href="{{ url_for('tickets.list_tickets') }}">
+                <span>Tickets</span>
+                <small>Book tickets for students and update quantity.</small>
+            </a>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <a class="module-link" href="{{ url_for('payments.list_payments') }}">
+                <span>Payments</span>
+                <small>Record and edit payment information.</small>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

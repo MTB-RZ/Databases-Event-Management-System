@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="section-kicker">Students</p>
+        <h1>Student Records</h1>
+    </div>
+    <form class="search-form" method="get" action="{{ url_for('students.list_students') }}">
+        <input class="form-control" type="search" name="search" value="{{ search }}" placeholder="Search by name">
+        <button class="btn btn-dark" type="submit">Search</button>
+        {% if search %}
+            <a class="btn btn-outline-secondary" href="{{ url_for('students.list_students') }}">Clear</a>
+        {% endif %}
+    </form>
+</section>
+
+<div class="row g-4">
+    <div class="col-lg-4">
+        <section class="content-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="section-kicker">{{ "Edit" if student else "Add" }}</p>
+                    <h2>{{ "Update Student" if student else "Add Student" }}</h2>
+                </div>
+            </div>
+            <form method="post" action="{{ url_for('students.update_student', student_id=student.student_id) if student else url_for('students.add_student') }}" class="vstack gap-3">
+                <div>
+                    <label class="form-label">Name</label>
+                    <input class="form-control" type="text" name="name" value="{{ student.name if student else '' }}" required>
+                </div>
+                <div>
+                    <label class="form-label">Email</label>
+                    <input class="form-control" type="email" name="email" value="{{ student.email if student else '' }}" required>
+                </div>
+                <div>
+                    <label class="form-label">Phone</label>
+                    <input class="form-control" type="text" name="phone" value="{{ student.phone if student else '' }}">
+                </div>
+                <div>
+                    <label class="form-label">Password</label>
+                    <input class="form-control" type="text" name="password" value="{{ student.password if student else '' }}" required>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary" type="submit">{{ "Update" if student else "Add" }} Student</button>
+                    {% if student %}
+                        <a class="btn btn-outline-secondary" href="{{ url_for('students.list_students') }}">Cancel</a>
+                    {% endif %}
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <div class="col-lg-8">
+        <section class="content-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="section-kicker">List</p>
+                    <h2>All Students</h2>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped align-middle app-table">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in students %}
+                            <tr>
+                                <td>{{ item.student_id }}</td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.email }}</td>
+                                <td>{{ item.phone or "-" }}</td>
+                                <td class="text-end">
+                                    <a class="btn btn-sm btn-outline-primary" href="{{ url_for('students.edit_student', student_id=item.student_id) }}">Edit</a>
+                                    <form class="d-inline delete-form" method="post" action="{{ url_for('students.delete_student', student_id=item.student_id) }}">
+                                        <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">No students found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
