@@ -55,15 +55,7 @@ Event_management_system/
 
 ## Installation Instructions
 
-1. Open the project folder:
-
-```text
-C:\Users\mutee\Documents\Codex\2026-06-07\project-event-management-system-flask-mysql\outputs\Event_management_system
-```
-
-2. Open PowerShell or Command Prompt in this folder.
-
-3. Install the required Python packages:
+1. Install the required Python packages:
 
 ```powershell
 pip install -r backend/requirements.txt
