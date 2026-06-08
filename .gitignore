@@ -12,5 +12,3 @@ instance/
 .DS_Store
 Thumbs.db
 database/*.sql
-static/css/*.css
-
